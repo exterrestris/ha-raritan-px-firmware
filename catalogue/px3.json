@@ -1,0 +1,83 @@
+{
+  "$schema": "schema/catalogue.json",
+  "versions": [
+      {
+        "version": "3.6.1",
+        "support_url": "https://www.raritan.com/support/product/px3/px3-version-3.6.1",
+        "firmware_url": "https://d3b2us605ptvk2.cloudfront.net/download/px3/version-3.6.1/pdu_px2_3.6.1_46982.zip",
+        "release_notes_url": "https://cdn.raritan.com/download/px3/version-3.6.1/Xerus_ReleaseNotes_3.6.1.pdf",
+        "products": [
+          "PX3"
+        ],
+        "min_prev_version": "3.6.0"
+      },
+      {
+        "version": "3.6.0",
+        "support_url": "https://www.raritan.com/support/product/px3/px3-version-3.6.0",
+        "firmware_url": "https://d3b2us605ptvk2.cloudfront.net/download/px3/version-3.6.0/pdu_px2_3.6.0_46486.zip",
+        "release_notes_url": "https://cdn.raritan.com/download/px3/version-3.6.0/Xerus_ReleaseNotes_3.6.0.pdf",
+        "products": [
+          "PX3"
+        ],
+        "min_prev_version": "3.5.0"
+      },
+      {
+        "version": "3.5.0",
+        "support_url": "https://www.raritan.com/support/product/px3/px3-version-3.5.0",
+        "firmware_url": "https://d3b2us605ptvk2.cloudfront.net/download/px3/version-3.5.0/pdu_px2_3.5.0_45371.zip",
+        "release_notes_url": "https://cdn.raritan.com/download/px3/version-3.5.0/XerusReleaseNotes3_5_0v3.pdf",
+        "products": [
+          "PX3"
+        ],
+        "min_prev_version": "3.3.0"
+      },
+      {
+        "version": "3.4.0",
+        "support_url": "https://www.raritan.com/support/product/px3/px3-version-3.4.0",
+        "firmware_url": "https://d3b2us605ptvk2.cloudfront.net/download/px3/version-3.4.0/pdu_px2_3.4.0_44367.zip",
+        "release_notes_url": "https://d3b2us605ptvk2.cloudfront.net/download/px3/version-3.4.0/Xerus_ReleaseNotes_3.4.0.pdf",
+        "products": [
+          "PX3"
+        ]
+      },
+      {
+        "version": "3.3.10",
+        "support_url": "https://www.raritan.com/support/product/px3/px3-version-3.3.10",
+        "firmware_url": "https://d3b2us605ptvk2.cloudfront.net/download/px3/version-3.3.10/pdu-px2-3.3.10-43736.zip",
+        "release_notes_url": "https://d3b2us605ptvk2.cloudfront.net/download/px3/version-3.3.10/PX-ReleaseNotes-3.3.10-v5.pdf",
+        "products": [
+          "PX3"
+        ]
+      },
+      {
+        "version": "3.2.30",
+        "support_url": "https://www.raritan.com/support/product/px3/px3-version-3.2.30",
+        "firmware_url": "https://d3b2us605ptvk2.cloudfront.net/download/px3/version-3.2.30/pdu-px2-030230-43188.zip",
+        "release_notes_url": "https://d3b2us605ptvk2.cloudfront.net/download/px3/version-3.2.30/PX2ReleaseNotes3_2_30_0v2.pdf",
+        "products": [
+          "PX3"
+        ]
+      },
+      {
+        "version": "3.2.10",
+        "support_url": "https://www.raritan.com/support/product/px3/px3-version-3.2.10",
+        "firmware_url": "https://d3b2us605ptvk2.cloudfront.net/download/px3/version-3.2.10/pdu-px2-030210-42978.zip",
+        "release_notes_url": "https://d3b2us605ptvk2.cloudfront.net/download/px3/version-3.2.10/PX2ReleaseNotes3_2_10_0v5.pdf",
+        "products": [
+          "PX3"
+        ]
+      },
+      {
+        "version": "3.1.0",
+        "support_url": "https://www.raritan.com/support/product/px3/version-3.1.0-1",
+        "firmware_url": "https://d3b2us605ptvk2.cloudfront.net/download/px2-based/version-3.1.0/pdu-px2-030100-42165.zip",
+        "release_notes_url": "https://d3b2us605ptvk2.cloudfront.net/download/px2-based/version-3.1.0/PX2ReleaseNotes3_1_0v3.pdf",
+        "products": [
+          "PX3"
+        ],
+        "unsupported_models": [
+          "PX3-4039V-E2"
+        ]
+      }
+    ]
+}

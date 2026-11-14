@@ -1,0 +1,38 @@
+{
+  "$schema": "schema/catalogue.json",
+  "versions": [
+    {
+      "version": "3.6.1",
+      "support_url": "https://www.raritan.com/support/product/pxc/pxc-version-3.6.1",
+      "firmware_url": "https://d3b2us605ptvk2.cloudfront.net/download/pxc/version-3.6.1/pdu_px2_3.6.1_46982.zip",
+      "release_notes_url": "https://cdn.raritan.com/download/pxc/version-3.6.1/Xerus_ReleaseNotes_3.6.1.pdf",
+      "products": [
+        "PXC",
+        "PXO"
+      ],
+      "min_prev_version": "3.6.0"
+    },
+    {
+      "version": "3.6.0",
+      "support_url": "https://www.raritan.com/support/product/pxc/pxc-version-3.6.0",
+      "firmware_url": "https://d3b2us605ptvk2.cloudfront.net/download/pxc/version-3.6.0/pdu_px2_3.6.0_46486.zip",
+      "release_notes_url": "http://cdn.raritan.com/download/pxc/version-3.6.0/Xerus_ReleaseNotes_3.6.0.pdf",
+      "products": [
+        "PXC",
+        "PXO"
+      ],
+      "min_prev_version": "3.5.0"
+    },
+    {
+      "version": "3.5.0",
+      "firmware_url": "https://d3b2us605ptvk2.cloudfront.net/download/px3/version-3.5.0/pdu_px2_3.5.0_45371.zip",
+      "support_url": "https://www.raritan.com/support/product/pxc/pxc-version-3.5.0",
+      "release_notes_url": "https://cdn.raritan.com/download/px3/version-3.5.0/XerusReleaseNotes3_5_0v3.pdf",
+      "products": [
+        "PXC",
+        "PXO"
+      ],
+      "min_prev_version": "3.3.0"
+    }
+  ]
+}
