@@ -1,0 +1,27 @@
+{
+  "$id": "catalogue",
+  "$schema": "http://json-schema.org/draft/2020-12/schema",
+  "title": "",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "products": {
+      "type": "array",
+      "items": {
+        "$ref": "./product.json"
+      },
+      "minItems": 1
+    },
+    "versions": {
+      "type": "array",
+      "description": "",
+      "items": {
+        "$ref": "./firmware.json"
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "versions"
+  ]
+}

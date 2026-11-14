@@ -1,0 +1,52 @@
+{
+  "$id": "firmware",
+  "$schema": "http://json-schema.org/draft/2020-12/schema",
+  "title": "Test",
+  "type": "object",
+  "properties": {
+    "version": {
+      "$ref": "./version.json"
+    },
+    "firmware_url": {
+      "$ref": "./url.json"
+    },
+    "products": {
+      "type": "array",
+      "items": {
+        "$ref": "./product.json"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "support_url": {
+      "$ref": "./url.json"
+    },
+    "release_notes_url": {
+      "$ref": "./url.json"
+    },
+    "min_prev_version": {
+      "$ref": "./version.json"
+    },
+    "advisories": {
+      "type": "array",
+      "items": {
+        "$ref": "./advisory.json"
+      },
+      "minItems": 1
+    },
+    "unsupported_models": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "firmware_url",
+    "products",
+    "version"
+  ],
+  "additionalProperties": false
+}

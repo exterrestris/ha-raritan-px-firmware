@@ -1,0 +1,19 @@
+{
+  "$id": "advisory",
+  "$schema": "http://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "issue": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "fixed_in": {
+      "$ref": "./version.json"
+    }
+  },
+  "required": [
+    "issue"
+  ]
+}

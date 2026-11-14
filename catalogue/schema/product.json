@@ -1,0 +1,13 @@
+{
+  "$id": "product",
+  "$schema": "http://json-schema.org/draft/2020-12/schema",
+  "type": "string",
+  "enum": [
+    "PX2",
+    "PX3",
+    "PX4",
+    "PXC",
+    "PXO",
+    "PXE"
+  ]
+}
