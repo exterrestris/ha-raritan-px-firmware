@@ -1,0 +1,112 @@
+
+name: Build, Validate and Release JSON Catalogue
+
+on:
+  push:
+    branches:
+      - '**'
+
+  pull_request:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    name: Bundle Schema and Validate Data
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build Docker image
+        run: docker compose build
+
+      - name: Create output directory
+        run: mkdir -p dist
+
+      - name: Bundle JSON schemas
+        run: docker compose run --rm schema-bundler
+
+      - name: Validate JSON data
+        run: docker compose run --rm json-validator
+
+      - name: Consolidate JSON data
+        run: docker compose run --rm json-consolidator
+
+      # Upload generated files for every successful validation.
+      - name: Upload generated catalogue
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-json-catalogue
+          path: |
+            dist/schema.json
+            dist/catalogue.json
+          if-no-files-found: error
+          retention-days: 7
+
+      # Only publish releases from pushes to main.
+      - name: Generate CalVer version
+        if: >-
+          github.event_name == 'push' &&
+          github.ref == 'refs/heads/main'
+        id: version
+        shell: bash
+        run: |
+          VERSION="$(date -u +'%Y.%m.%d').${GITHUB_RUN_NUMBER}"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Configure Git identity
+        if: steps.version.outputs.version != ''
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Create and push Git tag
+        if: steps.version.outputs.version != ''
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        shell: bash
+        run: |
+          TAG="v${VERSION}"
+
+          git fetch --force --tags
+
+          if git rev-parse -q --verify "refs/tags/${TAG}" >/dev/null; then
+            EXISTING_COMMIT="$(git rev-list -n 1 "$TAG")"
+
+            if [ "$EXISTING_COMMIT" != "$GITHUB_SHA" ]; then
+              echo "Tag $TAG already exists on another commit."
+              exit 1
+            fi
+
+            echo "Tag $TAG already exists on this commit."
+          else
+            git tag -a "$TAG" "$GITHUB_SHA" \
+              -m "Release $TAG"
+
+            git push origin "$TAG"
+          fi
+
+      - name: Create GitHub Release
+        if: steps.version.outputs.version != ''
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          target_commitish: ${{ github.sha }}
+          name: Release v${{ steps.version.outputs.version }}
+          generate_release_notes: true
+          draft: false
+          prerelease: false
+          make_latest: true
+          files: |
+            dist/schema.json
+            dist/catalogue.json
