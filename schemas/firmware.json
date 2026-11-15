@@ -1,11 +1,11 @@
 {
   "$id": "firmware",
   "$schema": "http://json-schema.org/draft/2020-12/schema",
-  "title": "Test",
+  "title": "Firmware",
   "type": "object",
   "properties": {
     "version": {
-      "$ref": "./version.json"
+      "$ref": "./firmware-version.json"
     },
     "firmware_url": {
       "$ref": "./url.json"
@@ -25,7 +25,7 @@
       "$ref": "./url.json"
     },
     "min_prev_version": {
-      "$ref": "./version.json"
+      "$ref": "./firmware-version.json"
     },
     "unsupported_models": {
       "type": "array",

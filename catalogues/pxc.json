@@ -1,6 +1,6 @@
 {
   "$schema": "../schemas/catalogue.json",
-  "versions": [
+  "firmwares": [
     {
       "version": "3.6.1",
       "support_url": "https://www.raritan.com/support/product/pxc/pxc-version-3.6.1",
