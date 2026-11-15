@@ -95,11 +95,24 @@ jobs:
           CHANGED=false
 
           for FILE in schema.json catalogue.json; do
-            if [[ ! -f "$TEMP_DIR/$FILE" ]] || ! cmp -s "dist/$FILE" "$TEMP_DIR/$FILE"; then
-              echo "$FILE has changed (or was missing from the previous release)."
+            if [[ ! -f "$TEMP_DIR/$FILE" ]]; then
+              echo "$FILE is missing from the previous release."
               CHANGED=true
-            else
-              echo "$FILE is unchanged."
+              continue
+            fi
+
+            if [[ "$FILE" == "catalogue.json" ]]; then
+              # Ignore the release-specific version property.
+              jq 'del(.version)' "dist/$FILE" > "$TEMP_DIR/current.json"
+              jq 'del(.version)' "$TEMP_DIR/$FILE" > "$TEMP_DIR/previous.json"
+
+              if ! cmp -s "$TEMP_DIR/current.json" "$TEMP_DIR/previous.json"; then
+                echo "$FILE has changed."
+                CHANGED=true
+              fi
+            elif ! cmp -s "dist/$FILE" "$TEMP_DIR/$FILE"; then
+              echo "$FILE has changed."
+              CHANGED=true
             fi
           done
 
@@ -112,6 +125,20 @@ jobs:
         run: |
           VERSION="$(date -u +'%Y.%m.%d').${GITHUB_RUN_NUMBER}"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Set catalogue version
+        if: steps.version.outputs.version != ''
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          jq --arg version "$VERSION" \
+            '.version = $version' \
+            dist/catalogue.json > dist/catalogue.tmp.json
+
+          mv dist/catalogue.tmp.json dist/catalogue.json
 
       - name: Configure Git identity
         if: steps.version.outputs.version != ''
