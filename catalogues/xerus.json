@@ -1,5 +1,5 @@
 {
-  "$schema": "schema/catalogue.json",
+  "$schema": "../schemas/catalogue.json",
   "versions": [
     {
       "version": "4.3.15",
