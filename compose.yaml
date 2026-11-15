@@ -1,0 +1,42 @@
+services:
+  schema-bundler:
+    build:
+      context: .
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - node_modules:/app/node_modules
+    command:
+      - build/bundle-schema.mjs
+      - schemas/catalogue.json
+      - dist/schema.json
+
+  json-validator:
+    build:
+      context: .
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - node_modules:/app/node_modules
+    command:
+      - build/validate-json.mjs
+      - catalogues
+      - dist/schema.json
+      - --recursive
+
+  json-consolidator:
+    build:
+      context: .
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - node_modules:/app/node_modules
+    command:
+      - build/consolidate-json.mjs
+      - catalogues
+      - dist/schema.json
+      - dist/catalogue.json
+      - --recursive
+
+volumes:
+  node_modules:

@@ -1,0 +1,11 @@
+{
+  "name": "ha-raritan-px-firmware-catalogue",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@apidevtools/json-schema-ref-parser": "^14.0.0",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  }
+}
