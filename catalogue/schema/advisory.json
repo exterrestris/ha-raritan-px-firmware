@@ -9,11 +9,20 @@
     "description": {
       "type": "string"
     },
+    "affects": {
+      "type": "array",
+      "items": {
+        "$ref": "./version.json"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
     "fixed_in": {
       "$ref": "./version.json"
     }
   },
   "required": [
-    "issue"
+    "issue",
+    "affects"
   ]
 }

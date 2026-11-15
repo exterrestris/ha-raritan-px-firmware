@@ -27,13 +27,6 @@
     "min_prev_version": {
       "$ref": "./version.json"
     },
-    "advisories": {
-      "type": "array",
-      "items": {
-        "$ref": "./advisory.json"
-      },
-      "minItems": 1
-    },
     "unsupported_models": {
       "type": "array",
       "items": {

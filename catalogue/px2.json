@@ -36,12 +36,6 @@
       "support_url": "https://www.raritan.com/support/product/px2/px2-version-3.4.0",
       "firmware_url": "https://cdn.raritan.com/download/px2/version-3.4.0/pdu_px2_3.4.0_44367.zip",
       "release_notes_url": "https://cdn.raritan.com/download/px2/version-3.4.0/Xerus_ReleaseNotes_3.4.0.pdf",
-      "advisories": [
-        {
-          "issue": "PDU GA firmware release 3.4 has a condition that allows the inlet meter to occasionally reports a zero voltage for one sample incorrectly.",
-          "fixed_in": "3.5.0"
-        }
-      ],
       "products": [
         "PX2"
       ]
@@ -102,6 +96,15 @@
         "PX2-4850PR-F5N1A0",
         "PX2-4869PR-N1A0"
       ]
+    }
+  ],
+  "advisories": [
+    {
+      "issue": "PDU GA firmware release 3.4 has a condition that allows the inlet meter to occasionally reports a zero voltage for one sample incorrectly.",
+      "affects": [
+        "3.4.0"
+      ],
+      "fixed_in": "3.5.0"
     }
   ]
 }
