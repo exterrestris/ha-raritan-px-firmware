@@ -1,10 +1,13 @@
 {
   "$id": "catalogue",
   "$schema": "http://json-schema.org/draft/2020-12/schema",
-  "title": "",
+  "title": "Firmware Catalogue",
   "description": "",
   "type": "object",
   "properties": {
+    "version": {
+      "$ref": "./catalogue-version.json"
+    },
     "products": {
       "type": "array",
       "items": {
@@ -12,7 +15,7 @@
       },
       "minItems": 1
     },
-    "versions": {
+    "firmwares": {
       "type": "array",
       "description": "",
       "items": {
@@ -29,6 +32,6 @@
     }
   },
   "required": [
-    "versions"
+    "firmwares"
   ]
 }

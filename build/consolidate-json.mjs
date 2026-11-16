@@ -34,7 +34,7 @@ async function findJsonFiles(directory, recursive = false) {
 
 function createCatalogue() {
   return {
-    versions: []
+    firmwares: []
   };
 }
 
@@ -64,7 +64,7 @@ function addRecord(catalogue, record, source) {
 
   // Allow existing catalogue fragments to be merged.
   if (
-    "versions" in record ||
+    "firmwares" in record ||
     "advisories" in record ||
     "products" in record
   ) {
@@ -74,7 +74,7 @@ function addRecord(catalogue, record, source) {
       "firmware_url" in record ||
       "version" in record
     ) {
-      catalogue.versions.push(record);
+      catalogue.firmwares.push(record);
       return;
     }
 
@@ -92,8 +92,8 @@ function addRecord(catalogue, record, source) {
       addRecord(catalogue, record.products, source);
     }
 
-    if (record.versions !== undefined) {
-      addRecord(catalogue, record.versions, source);
+    if (record.firmwares !== undefined) {
+      addRecord(catalogue, record.firmwares, source);
     }
 
     if (record.advisories !== undefined) {
@@ -109,7 +109,7 @@ function addRecord(catalogue, record, source) {
     "firmware_url" in record ||
     "version" in record
   ) {
-    catalogue.versions.push(record);
+    catalogue.firmwares.push(record);
     return;
   }
 
@@ -242,7 +242,7 @@ async function consolidate(
     console.log("-------------------------");
     console.log(`Files processed: ${readCount}`);
     console.log(`Products:        ${(catalogue.products ??= []).length}`);
-    console.log(`Versions:        ${catalogue.versions.length}`);
+    console.log(`firmwares:        ${catalogue.firmwares.length}`);
     console.log(`Advisories:      ${(catalogue.advisories ??= []).length}`);
     console.log(`Output:          ${outputPath}`);
 

@@ -1,6 +1,7 @@
 {
-  "$id": "version",
+  "$id": "firmware-version",
   "$schema": "http://json-schema.org/draft/2020-12/schema",
+  "title": "Firmware Version",
   "type": "string",
   "pattern": "^[0-9]\\.[0-9]+\\.[0-9]+$"
 }

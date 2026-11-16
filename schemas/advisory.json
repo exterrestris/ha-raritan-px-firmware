@@ -12,13 +12,13 @@
     "affects": {
       "type": "array",
       "items": {
-        "$ref": "./version.json"
+        "$ref": "./firmware-version.json"
       },
       "minItems": 1,
       "uniqueItems": true
     },
     "fixed_in": {
-      "$ref": "./version.json"
+      "$ref": "./firmware-version.json"
     }
   },
   "required": [
