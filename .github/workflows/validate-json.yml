@@ -31,13 +31,13 @@ jobs:
         run: mkdir -p dist
 
       - name: Bundle JSON schemas
-        run: docker compose run --rm schema-bundler
+        run: docker compose run --rm bundle-schema
 
       - name: Validate JSON data
-        run: docker compose run --rm json-validator
+        run: docker compose run --rm validate-json
 
       - name: Consolidate JSON data
-        run: docker compose run --rm json-consolidator
+        run: docker compose run --rm consolidate-json
 
       - name: Upload generated artifacts
         uses: actions/upload-artifact@v7

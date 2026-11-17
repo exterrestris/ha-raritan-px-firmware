@@ -1,5 +1,5 @@
 services:
-  schema-bundler:
+  bundle-schema:
     build:
       context: .
     working_dir: /app
@@ -11,7 +11,7 @@ services:
       - schemas/catalogue.json
       - dist/schema.json
 
-  json-validator:
+  validate-json:
     build:
       context: .
     working_dir: /app
@@ -24,7 +24,7 @@ services:
       - dist/schema.json
       - --recursive
 
-  json-consolidator:
+  consolidate-json:
     build:
       context: .
     working_dir: /app
