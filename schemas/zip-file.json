@@ -1,0 +1,6 @@
+{
+  "$id": "zip-file",
+  "$schema": "http://json-schema.org/draft/2020-12/schema",
+  "type": "string",
+  "pattern": "^(.+/)?[a-zA-Z0-9_\\.-]+\\.zip$"
+}
