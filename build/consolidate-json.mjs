@@ -38,18 +38,27 @@ function createCatalogue() {
   };
 }
 
-function addRecord(catalogue, record, source) {
+function addFirmware(catalogue, firmware, products) {
+  catalogue.firmwares.push(firmware);
+
+  // Preserve each firmware's products array and collect
+  // distinct products for the consolidated catalogue.
+  for (const product of firmware.products ?? []) {
+    products.add(product);
+  }
+}
+
+function addRecord(catalogue, record, source, products) {
   // Allow arrays containing multiple records.
   if (Array.isArray(record)) {
     for (const item of record) {
-      addRecord(catalogue, item, source);
+      addRecord(catalogue, item, source, products);
     }
     return;
   }
 
-  // Product records are strings.
+  // Ignore standalone product records.
   if (typeof record === "string") {
-    (catalogue.products ??= []).push(record);
     return;
   }
 
@@ -62,54 +71,12 @@ function addRecord(catalogue, record, source) {
     );
   }
 
-  // Allow existing catalogue fragments to be merged.
-  if (
-    "firmwares" in record ||
-    "advisories" in record ||
-    "products" in record
-  ) {
-    // Check firmware and advisory records before
-    // interpreting an object as a catalogue fragment.
-    if (
-      "firmware_url" in record ||
-      "version" in record
-    ) {
-      catalogue.firmwares.push(record);
-      return;
-    }
-
-    if (
-      "issue" in record ||
-      "affects" in record ||
-      "fixed_in" in record
-    ) {
-      (catalogue.advisories ??= []).push(record);
-      return;
-    }
-
-    if (record.products !== undefined) {
-      catalogue.products ??= [];
-      addRecord(catalogue, record.products, source);
-    }
-
-    if (record.firmwares !== undefined) {
-      addRecord(catalogue, record.firmwares, source);
-    }
-
-    if (record.advisories !== undefined) {
-      catalogue.advisories ??= [];
-      addRecord(catalogue, record.advisories, source);
-    }
-
-    return;
-  }
-
-  // Firmware records.
+  // Identify firmware records before catalogue fragments.
   if (
     "firmware_url" in record ||
     "version" in record
   ) {
-    catalogue.firmwares.push(record);
+    addFirmware(catalogue, record, products);
     return;
   }
 
@@ -119,7 +86,34 @@ function addRecord(catalogue, record, source) {
     "affects" in record ||
     "fixed_in" in record
   ) {
-    catalogue.advisories.push(record);
+    (catalogue.advisories ??= []).push(record);
+    return;
+  }
+
+  // Allow existing catalogue fragments to be merged.
+  if (
+    "versions" in record ||
+    "firmwares" in record ||
+    "advisories" in record ||
+    "products" in record
+  ) {
+    // Deliberately ignore record.products.
+    // Catalogue products are derived from firmware records only.
+
+    if (record.versions !== undefined) {
+      addRecord(catalogue, record.versions, source, products);
+    }
+
+    // Accept the previous "firmwares" input spelling.
+    if (record.firmwares !== undefined) {
+      addRecord(catalogue, record.firmwares, source, products);
+    }
+
+    if (record.advisories !== undefined) {
+      catalogue.advisories ??= [];
+      addRecord(catalogue, record.advisories, source, products);
+    }
+
     return;
   }
 
@@ -186,6 +180,8 @@ async function consolidate(
     );
 
     const catalogue = createCatalogue();
+    const products = new Set();
+
     let readCount = 0;
     let failedCount = 0;
 
@@ -197,7 +193,7 @@ async function consolidate(
         const content = await fs.readFile(file, "utf8");
         const json = JSON.parse(content);
 
-        addRecord(catalogue, json, relativePath);
+        addRecord(catalogue, json, relativePath, products);
 
         console.log(`✓ Loaded ${relativePath}`);
         readCount++;
@@ -212,6 +208,12 @@ async function consolidate(
       throw new Error(
         `${failedCount} input file(s) could not be processed.`
       );
+    }
+
+    // Populate catalogue products from the distinct products
+    // referenced by all consolidated firmware versions.
+    if (products.size > 0) {
+      catalogue.products = [...products].sort();
     }
 
     // Validate the complete consolidated catalogue.
@@ -241,9 +243,9 @@ async function consolidate(
     console.log("\nConsolidation successful.");
     console.log("-------------------------");
     console.log(`Files processed: ${readCount}`);
-    console.log(`Products:        ${(catalogue.products ??= []).length}`);
-    console.log(`firmwares:        ${catalogue.firmwares.length}`);
-    console.log(`Advisories:      ${(catalogue.advisories ??= []).length}`);
+    console.log(`Products:        ${(catalogue.products ?? []).length}`);
+    console.log(`Firmwares:       ${catalogue.firmwares.length}`);
+    console.log(`Advisories:      ${(catalogue.advisories ?? []).length}`);
     console.log(`Output:          ${outputPath}`);
 
   } catch (error) {
